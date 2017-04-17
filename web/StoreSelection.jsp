@@ -12,19 +12,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Store Selection</title>
     </head>
-    <body>
-        <h1>Select Store for Inventory:</h1>
-        <p>${ user.userid } - ${ user.username }, ${ user.adminLevel } Level</p>
-        
-        <form action="" id="selection" method="post">
-            Stores:<br/>
-            <select id="storeid" name="storeid">
-                <c:forEach var="store" items="${ stores }">
-                    <option ${ store.storeid == user.storeid ? "selected" : "" } value="${ store.storeid }">${ store.storeName }</option>
-                </c:forEach>
-            </select>
-        </form>
-        
-        <p>${ msg }</p>
-    </body>
+        <body>
+            <h1>Select Store for Inventory:</h1>
+            <p>${ user.userid } - ${ user.username }, ${ user.adminLevel } Level</p>
+
+            <form action="StoreSelection" id="selection" method="post">
+                Stores:<br/>
+                <select id="storeid" name="storeid">
+                    <c:forEach var="store" items="${ stores }">
+                        <option ${ store.storeid == user.storeid ? "selected" : "" } value="${ store.storeid }">${ store.storeName }</option>
+                    </c:forEach>
+                </select>
+                <button>View/Edit Inventory</button>
+            </form>
+            <p>${ msg }</p>
+        </body>
 </html>

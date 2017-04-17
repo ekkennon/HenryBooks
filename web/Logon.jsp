@@ -12,6 +12,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>HenryBooks Logon</title>
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
     </head>
     <body>
         <h1>Welcome to the Inventory System</h1>
@@ -21,7 +26,7 @@
                 <tr>
                     <td>User ID:</td>
                     <td><input type="text" name="userid" id="userid"
-                               value="">
+                               value="${empty user.userid ? cookie.userid.value : user.userid}">
                     </td>
                 </tr>
                 <tr>
@@ -33,6 +38,6 @@
             <input type="submit" value="Logon">
         </form>
         <br/>
-        ${msg}
+        <p class="error">${msg}</p>
     </body>
 </html>

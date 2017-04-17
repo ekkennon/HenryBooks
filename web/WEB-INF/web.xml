@@ -4,6 +4,30 @@
         <servlet-name>LogonServlet</servlet-name>
         <servlet-class>servlets.LogonServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateInventoryServlet</servlet-name>
+        <servlet-class>servlets.UpdateInventoryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreSelectionServlet</servlet-name>
+        <servlet-class>servlets.StoreSelectionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewInventoryServlet</servlet-name>
+        <servlet-class>servlets.ViewInventoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateInventoryServlet</servlet-name>
+        <url-pattern>/UpdateInventory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreSelectionServlet</servlet-name>
+        <url-pattern>/StoreSelection</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewInventoryServlet</servlet-name>
+        <url-pattern>/ViewInventory</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogonServlet</servlet-name>
         <url-pattern>/Logon</url-pattern>

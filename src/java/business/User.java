@@ -111,10 +111,10 @@ public class User {
     }
     
     public boolean isAuthenticated() {
-        /*if (this.password > 0) {
+        if (this.password > 0) {
             return this.password == this.pwAttempt;
         }
-        return false;*/
-        return true;
+        return false;
+        //return true;
     }
 }
