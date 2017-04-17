@@ -11,30 +11,33 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Inventory</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <p>Branch #: ${ store.storeid } </p>
+        <p>Branch Name: ${ store.storeName } </p>
+        <p>Branch Location: ${ store.address } </p>
         <c:if test="${user.adminLevel eq 'Admn'}">
             <input placeholder="Book Code"/>
             <button>Edit Record</button>
+            <br/>
         </c:if>
     
         <table border="1">
             <tr>
-                <th bgcolor="DBDAC1">
+                <th bgcolor="D5F2F2">
                     Store
                 </th>
-                <th bgcolor="DBDAC1">
+                <th bgcolor="D5F2F2">
                     Book Code
                 </th>
-                <th bgcolor="DBDAC1">
+                <th bgcolor="D5F2F2">
                     Title
                 </th>
-                <th bgcolor="DBDAC1">
+                <th bgcolor="D5F2F2">
                     Retail Price
                 </th>
-                <th bgcolor="DBDAC1">
+                <th bgcolor="D5F2F2">
                     Quantity
                 </th>
             </tr>

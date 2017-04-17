@@ -45,10 +45,10 @@ public class StoreSelectionServlet extends HttpServlet {
         
         try {
             String store = request.getParameter("storeid").trim();
-            //JOptionPane.showConfirmDialog(null, store);
-            //int userId = Integer.parseInt(request.getParameter("userid").trim());
             
             //TODO validate userid and storeid
+            //TODO get storeid, store name, and store address to pass to viewinventory jsp
+            //TODO start inventory update page
             ConnectionPool pool = ConnectionPool.getInstance();
             Connection conn = pool.getConnection();
             
@@ -72,7 +72,6 @@ public class StoreSelectionServlet extends HttpServlet {
         }
         request.setAttribute("msg", msg);
         request.setAttribute("booklist", booklist);
-        //JOptionPane.showConfirmDialog(null, request.getAttribute("booklist"));
         RequestDispatcher disp = getServletContext().getRequestDispatcher(url);
         disp.forward(request,response);
         
