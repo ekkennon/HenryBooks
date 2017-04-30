@@ -1,7 +1,7 @@
 <%-- 
     Document   : StoreSelection
     Created on : Apr 11, 2017, 5:07:23 PM
-    Author     : raefo
+    Author     : ekk
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -15,7 +15,6 @@
         {
             var sl = document.getElementById("storeid");
             var storeid = sl.options[sl.selectedIndex].value;
-            console.log("store:" + storeid);
             if (ajax) {
                 ajax.open('get','StoreSelection?storeid='+storeid);
                 ajax.send(null);
@@ -29,10 +28,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Store Selection</title>
-        
     </head>
         <body>
-            
             <h1>Select Store for Inventory:</h1>
             <p>${ user.userid } - ${ user.username }, ${ user.adminLevel } Level</p>
 
@@ -44,8 +41,7 @@
                     </c:forEach>
                 </select>
             </form>
-            <input type="submit" onclick="pageAction()" value="submit"/>
-            
+            <input type="submit" onclick="pageAction()" value="View"/>
             
             <div id="inventory"></div>
             

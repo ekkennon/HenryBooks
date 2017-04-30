@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package servlets;
 
 import business.Book;
@@ -10,18 +6,16 @@ import business.ConnectionPool;
 import business.Store;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
 
 /**
  *
- * @author raefo
+ * @author ekk
  */
 public class UpdateInventoryServlet extends HttpServlet {
 
@@ -34,21 +28,14 @@ public class UpdateInventoryServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //String store = request.getParameter("storeid");
-        //String book = request.getParameter("bookid");
-        //JOptionPane.showMessageDialog(null, store);
+
         String url = "/Logon";
         String newOnHand = request.getParameter("onhand").trim();
         Store store = (Store) request.getSession().getAttribute("store");
         Book book = (Book) request.getSession().getAttribute("book");
-        /*
-        if (newOnHand == null) {
-                newOnHand = 
-            }*/
+        String msg = "";
         
         try {
             ConnectionPool pool = ConnectionPool.getInstance();
@@ -59,35 +46,35 @@ public class UpdateInventoryServlet extends HttpServlet {
                         "WHERE storeID = ? " +
                         "and bookID = ?;";
                 
-                //Connection conn = DriverManager.getConnection(dbUrl,dbUser,dbPw);
             PreparedStatement ps = conn.prepareStatement(sql);
                 
             ps.setString(1, newOnHand);
             ps.setString(2, Integer.toString(store.getStoreid()));
             ps.setString(3, book.getBookid());
             
-            //JOptionPane.showMessageDialog(null, "updating...");
             
             int recordCount = ps.executeUpdate();
             
-            //JOptionPane.showMessageDialog(null, recordCount);
             
-            if (recordCount == 0) {
-                //msg += "Update failed - no changes<br/>";
-            } else if (recordCount == 1) {
-                //msg += "Member Updated!<br/>";
-                //m = newmem;
-                //request.getSession().setAttribute("m", m);
-                //JOptionPane.showMessageDialog(null, "updated");
-            } else {
-                //msg += "fatal error: " + recordCount + " records were changed<br/>";
+            switch (recordCount) {
+                case 0:
+                    msg += "Update failed - no changes<br/>";
+                    break;
+           
+                case 1:
+                    msg += "Book Updated!<br/>";
+                    break;
+            
+                default:
+                    msg += "fatal error: " + recordCount + " records were changed<br/>";
+                    break;
             }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Update Inv Error: " + e.getMessage());
+            msg += "Update Inv Error: " + e.getMessage() + "<br/>";
         }
         
-        //request.setAttribute("storeid", store);
+        request.setAttribute("msg", msg);
         RequestDispatcher disp = getServletContext().getRequestDispatcher(url);
         disp.forward(request,response);
     }

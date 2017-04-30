@@ -1,7 +1,7 @@
 <%-- 
     Document   : ViewInventory
     Created on : Apr 16, 2017, 4:39:46 PM
-    Author     : raefo
+    Author     : ekk
 --%>
 
 <%@page import="javax.swing.JOptionPane"%>
@@ -28,7 +28,7 @@
     
         <table border="1">
             <tr>
-                <th bgcolor="D5F2F2" id="st" value="${ store.storeid }">
+                <th bgcolor="D5F2F2">
                     Store
                 </th>
                 <th bgcolor="D5F2F2">
@@ -65,6 +65,6 @@
                 </tr>
             </c:forEach>
         </table>
-        <p>${ msg }</p>
+        <p class="error">${msg}</p>
     </body>
 </html>

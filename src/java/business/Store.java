@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package business;
 
 /**
  *
- * @author raefo
+ * @author ekk
  */
 public class Store {
     private int storeid;
@@ -15,7 +11,6 @@ public class Store {
     private String storeName;
     private String storeAddress;
 
-    
     public Store() {
         storeid = 0;
         numEmployees = 0;
@@ -78,6 +73,4 @@ public class Store {
     public void setStoreAddress(String storeAddress) {
         this.storeAddress = storeAddress;
     }
-    
-    
 }

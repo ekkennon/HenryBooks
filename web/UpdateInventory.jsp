@@ -1,7 +1,7 @@
 <%-- 
     Document   : UpdateInventory
     Created on : Apr 16, 2017, 3:37:15 PM
-    Author     : raefo
+    Author     : ekk
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,9 +10,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Update Inventory</title>
-        <script>
-            
-        </script>
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
     </head>
     <body>
         <h1>Update Inventory</h1>
@@ -27,8 +29,6 @@
         <p>Author: ${ book.author } </p>
         <br/>
         <form action="UpdateInventory" method="post">
-            <%-- <input hidden id="bookid" name="bookid" value="${ book.bookid }"/> --%>
-            <%-- <input hidden id="storeid" name="storeid" value="${ storeinfo.storeid }"/> --%>
             <input name="onhand" id="onhand" placeholder="${ book.onhand }"/>
             <button name="ty">Submit</button>
             

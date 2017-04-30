@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package servlets;
 
 import business.ConnectionPool;
@@ -20,11 +16,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
 
 /**
  *
- * @author raefo
+ * @author ekk
  */
 public class LogonServlet extends HttpServlet {
 
@@ -37,8 +32,7 @@ public class LogonServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //TODO verify an unauthorized user cannot access any pages after logon
         String url = "/Logon.jsp";
@@ -46,7 +40,6 @@ public class LogonServlet extends HttpServlet {
         ArrayList<Store> stores = new ArrayList<>();
         int userId = 0;
         Cookie uid;
-        Cookie[] cookies = request.getCookies();
         String sql;
         ResultSet r;
         PreparedStatement ps;
@@ -56,27 +49,9 @@ public class LogonServlet extends HttpServlet {
         try {
             User user = (User) request.getSession().getAttribute("user");
             if (user == null) {
-                /*
-                if the user got to the "update inventory" page and clicked cancel we re-direct to StoreSelection which would only load
-                the "view inventory" page. So this is to read the cookie value but if that can't be read the user is asked to logon.
-                */
-                /*userId = Integer.parseInt(request.getParameter("userid").trim());
-                //if (cookies.length > 1 && cookies[0].getName().equals("userid")) {
-                    url = "/StoreSelection.jsp";
-                    userId = Integer.parseInt(cookies[0].getValue());
-                    RequestDispatcher disp = getServletContext().getRequestDispatcher(url);
-                    disp.forward(request,response);
-                //} else if (request.getParameter("userid") != null) {*/
-                    userId = Integer.parseInt(request.getParameter("userid").trim());
-                /*} else {
-                    RequestDispatcher disp = getServletContext().getRequestDispatcher(url);
-                    disp.forward(request,response);
-                }*/
-                //JOptionPane.showConfirmDialog(null, userId);
+                userId = Integer.parseInt(request.getParameter("userid").trim());
                 int pwAttempt = Integer.parseInt(request.getParameter("password").trim());
 
-                
-                
                 sql = "SELECT * FROM Users WHERE UserID = '" + userId + "'";
                 ps = conn.prepareStatement(sql);
                 r = ps.executeQuery(sql);
@@ -97,7 +72,7 @@ public class LogonServlet extends HttpServlet {
                     msg = "User not found in DB<br/>";
                 }
             }
-            if (user.isAuthenticated()) {
+            if (user != null && user.isAuthenticated()) {
                 msg = "Welcome, " + user.getUsername() + "!<br/>";
                 url = "/StoreSelection.jsp";
             }

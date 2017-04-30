@@ -1,5 +1,5 @@
 /*  This page does all the magic for applying
- *  Ajax to a DebitCard history scenario.
+ *  Ajax for an inventory.
  *  Script will return data in HTML format.
  */
  
@@ -17,7 +17,7 @@ function init() {
         // Function that handles the response:
         ajax.onreadystatechange = function() {
             handleResponse();
-        }
+        };
   }
 } // End of init() function.
 
