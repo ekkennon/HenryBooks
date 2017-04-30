@@ -18,12 +18,12 @@ public class User {
     private String adminLevel;
     
     public User() {
-        setUserid(0);
-        setStoreid(0);
-        setPassword(0);
-        setPwAttempt(-1);
-        setUsername("");
-        setAdminLevel("");
+        userid = 0;
+        storeid = 0;
+        password = 0;
+        pwAttempt = -1;
+        username = "";
+        adminLevel = "";
     }
 
     /**

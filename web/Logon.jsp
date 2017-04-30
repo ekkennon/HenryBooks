@@ -10,20 +10,6 @@
 
 <html>
     <head>
-        <script language="javascript" type="text/javascript">
-        function pageAction(action)
-        {
-            alert('console');
-            /*
-            document.selection.storeid.value=action;
-            if (ajax) {
-                ajax.open('get','StoreSelection');
-                ajax.send(null);
-            } else {
-                document.selection.submit();
-            }*/
-        }
-    </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>HenryBooks Logon</title>
         <style>

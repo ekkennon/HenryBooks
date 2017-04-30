@@ -16,15 +16,16 @@ public class Book {
     private int storeid;
     private int onhand;
     private String title;
+    private String author;
     private double price;
     private NumberFormat curr = NumberFormat.getCurrencyInstance();
 
     public Book() {
-        setBookid("");
-        setStoreid(0);
-        setOnhand(0);
-        setTitle("");
-        setPrice(0);
+        bookid = "";
+        storeid = 0;
+        onhand = 0;
+        title = "";
+        price = 0;
     }
     
     /**
@@ -81,6 +82,20 @@ public class Book {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    /**
+     * @return the author
+     */
+    public String getAuthor() {
+        return author;
+    }
+
+    /**
+     * @param author the author to set
+     */
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     /**

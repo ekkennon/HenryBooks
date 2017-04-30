@@ -45,36 +45,65 @@ public class LogonServlet extends HttpServlet {
         String msg = "";
         ArrayList<Store> stores = new ArrayList<>();
         int userId = 0;
+        Cookie uid;
+        Cookie[] cookies = request.getCookies();
+        String sql;
+        ResultSet r;
+        PreparedStatement ps;
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection conn = pool.getConnection();
         
         try {
-            userId = Integer.parseInt(request.getParameter("userid").trim());
-            int pwAttempt = Integer.parseInt(request.getParameter("password").trim());
-            
-            ConnectionPool pool = ConnectionPool.getInstance();
-            Connection conn = pool.getConnection();
-            String sql = "SELECT * FROM Users WHERE UserID = '" + userId + "'";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet r = ps.executeQuery(sql);
-            if (r.next()) {
-                User user = new User();
-                user.setUserid(userId);
-                user.setPwAttempt(pwAttempt);
-                user.setPassword(r.getInt("userPassword"));
-                if (user.isAuthenticated()) {
-                    user.setUsername(r.getString("userName"));
-                    user.setStoreid(r.getInt("storeID"));
-                    user.setAdminLevel(r.getString("adminLevel"));
-                    msg = "Welcome, " + user.getUsername() + "!<br/>";
+            User user = (User) request.getSession().getAttribute("user");
+            if (user == null) {
+                /*
+                if the user got to the "update inventory" page and clicked cancel we re-direct to StoreSelection which would only load
+                the "view inventory" page. So this is to read the cookie value but if that can't be read the user is asked to logon.
+                */
+                /*userId = Integer.parseInt(request.getParameter("userid").trim());
+                //if (cookies.length > 1 && cookies[0].getName().equals("userid")) {
                     url = "/StoreSelection.jsp";
+                    userId = Integer.parseInt(cookies[0].getValue());
+                    RequestDispatcher disp = getServletContext().getRequestDispatcher(url);
+                    disp.forward(request,response);
+                //} else if (request.getParameter("userid") != null) {*/
+                    userId = Integer.parseInt(request.getParameter("userid").trim());
+                /*} else {
+                    RequestDispatcher disp = getServletContext().getRequestDispatcher(url);
+                    disp.forward(request,response);
+                }*/
+                //JOptionPane.showConfirmDialog(null, userId);
+                int pwAttempt = Integer.parseInt(request.getParameter("password").trim());
+
+                
+                
+                sql = "SELECT * FROM Users WHERE UserID = '" + userId + "'";
+                ps = conn.prepareStatement(sql);
+                r = ps.executeQuery(sql);
+                if (r.next()) {
+                    user = new User();
+                    user.setUserid(userId);
+                    user.setPwAttempt(pwAttempt);
+                    user.setPassword(r.getInt("userPassword"));
+                    if (user.isAuthenticated()) {
+                        user.setUsername(r.getString("userName"));
+                        user.setStoreid(r.getInt("storeID"));
+                        user.setAdminLevel(r.getString("adminLevel"));
+                    } else {
+                        msg = "Member failed to authenticate<br/>";
+                    }
+                    request.getSession().setAttribute("user", user);
                 } else {
-                    msg = "Member failed to authenticate<br/>";
+                    msg = "User not found in DB<br/>";
                 }
-                request.getSession().setAttribute("user", user);
-            } else {
-                msg = "User not found in DB<br/>";
+            }
+            if (user.isAuthenticated()) {
+                msg = "Welcome, " + user.getUsername() + "!<br/>";
+                url = "/StoreSelection.jsp";
             }
             
             sql = "SELECT * FROM stores ORDER BY StoreName";
+            ps = conn.prepareStatement(sql);
             r = ps.executeQuery(sql);
 
             while (r.next()) {
@@ -95,7 +124,7 @@ public class LogonServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             msg = "Illegal userid or password: "  + e.getMessage() + "<br/>";
         }
-        Cookie uid = new Cookie("userid",Integer.toString(userId));
+        uid = new Cookie("userid",Integer.toString(userId));
         uid.setMaxAge(60*10);
         uid.setPath("/");
         response.addCookie(uid);

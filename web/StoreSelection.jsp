@@ -11,8 +11,11 @@
 <script src="ajax.js" type="text/javascript"></script>
 <script src="inventory.js" type="text/javascript"></script>
 <script language="javascript" type="text/javascript">
-        function pageAction(storeid)
+        function pageAction()
         {
+            var sl = document.getElementById("storeid");
+            var storeid = sl.options[sl.selectedIndex].value;
+            console.log("store:" + storeid);
             if (ajax) {
                 ajax.open('get','StoreSelection?storeid='+storeid);
                 ajax.send(null);
@@ -26,19 +29,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Store Selection</title>
+        
     </head>
         <body>
+            
             <h1>Select Store for Inventory:</h1>
             <p>${ user.userid } - ${ user.username }, ${ user.adminLevel } Level</p>
 
-            <form action="StoreSelection" id="selection" method="post">
+            <form action="StoreSelection" method="post"  id="selection" >
                 Stores:<br/>
                 <select id="storeid" name="storeid">
-                    <c:forEach var="store" items="${ stores }">
-                        <option onclick="pageAction(${ store.storeid })" ${ store.storeid == user.storeid ? "selected" : "" } value="${ store.storeid }">${ store.storeName }</option>
+                    <c:forEach var="s" items="${ stores }">
+                        <option ${ s.storeid == user.storeid ? "selected" : "" } value="${ s.storeid }">${ s.storeName }</option>
                     </c:forEach>
                 </select>
             </form>
+            <input type="submit" onclick="pageAction()" value="submit"/>
+            
             
             <div id="inventory"></div>
             

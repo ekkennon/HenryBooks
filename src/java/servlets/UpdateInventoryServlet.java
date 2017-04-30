@@ -5,11 +5,19 @@
  */
 package servlets;
 
+import business.Book;
+import business.ConnectionPool;
+import business.Store;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +38,58 @@ public class UpdateInventoryServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        //String store = request.getParameter("storeid");
+        //String book = request.getParameter("bookid");
+        //JOptionPane.showMessageDialog(null, store);
+        String url = "/Logon";
+        String newOnHand = request.getParameter("onhand").trim();
+        Store store = (Store) request.getSession().getAttribute("store");
+        Book book = (Book) request.getSession().getAttribute("book");
+        /*
+        if (newOnHand == null) {
+                newOnHand = 
+            }*/
+        
+        try {
+            ConnectionPool pool = ConnectionPool.getInstance();
+            Connection conn = pool.getConnection();
+        
+            String sql = "UPDATE bookinv SET " +
+                        "onhand = ? " +
+                        "WHERE storeID = ? " +
+                        "and bookID = ?;";
+                
+                //Connection conn = DriverManager.getConnection(dbUrl,dbUser,dbPw);
+            PreparedStatement ps = conn.prepareStatement(sql);
+                
+            ps.setString(1, newOnHand);
+            ps.setString(2, Integer.toString(store.getStoreid()));
+            ps.setString(3, book.getBookid());
+            
+            //JOptionPane.showMessageDialog(null, "updating...");
+            
+            int recordCount = ps.executeUpdate();
+            
+            //JOptionPane.showMessageDialog(null, recordCount);
+            
+            if (recordCount == 0) {
+                //msg += "Update failed - no changes<br/>";
+            } else if (recordCount == 1) {
+                //msg += "Member Updated!<br/>";
+                //m = newmem;
+                //request.getSession().setAttribute("m", m);
+                //JOptionPane.showMessageDialog(null, "updated");
+            } else {
+                //msg += "fatal error: " + recordCount + " records were changed<br/>";
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Update Inv Error: " + e.getMessage());
+        }
+        
+        //request.setAttribute("storeid", store);
+        RequestDispatcher disp = getServletContext().getRequestDispatcher(url);
+        disp.forward(request,response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

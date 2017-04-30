@@ -17,10 +17,10 @@ public class Store {
 
     
     public Store() {
-        setStoreid(0);
-        setNumEmployees(0);
-        setStoreName("");
-        setStoreAddress("");
+        storeid = 0;
+        numEmployees = 0;
+        storeName = "";
+        storeAddress = "";
     }
     
     /**

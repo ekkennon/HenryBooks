@@ -16,16 +16,19 @@
     <body>
         <p>Branch #: ${ store.storeid } </p>
         <p>Branch Name: ${ store.storeName } </p>
-        <p>Branch Location: ${ store.address } </p>
+        <p>Branch Location: ${ store.storeAddress } </p>
         <c:if test="${user.adminLevel eq 'Admn'}">
-            <input placeholder="Book Code"/>
-            <button>Edit Record</button>
+            <form action="ViewInventory" method="post">
+                <input name="bookid" id="bookid" placeholder="Book Code"/>
+                <input hidden name="storeid" id="storeid" value="${ store.storeid }" />
+                <button>Edit Record</button>
+            </form>
             <br/>
         </c:if>
     
         <table border="1">
             <tr>
-                <th bgcolor="D5F2F2">
+                <th bgcolor="D5F2F2" id="st" value="${ store.storeid }">
                     Store
                 </th>
                 <th bgcolor="D5F2F2">
@@ -62,5 +65,6 @@
                 </tr>
             </c:forEach>
         </table>
+        <p>${ msg }</p>
     </body>
 </html>
