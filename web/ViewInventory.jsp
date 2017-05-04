@@ -54,13 +54,13 @@
                         ${ bk.bookid }
                     </td>
                     <td align="right">
-                        ${ bk.onhand }
-                    </td>
-                    <td align="right">
                         ${ bk.title }
                     </td>
                     <td align="right">
                         ${ bk.price }
+                    </td>
+                    <td align="right">
+                        ${ bk.onhand }
                     </td>
                 </tr>
             </c:forEach>

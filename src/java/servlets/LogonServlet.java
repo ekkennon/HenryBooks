@@ -34,7 +34,7 @@ public class LogonServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //TODO verify an unauthorized user cannot access any pages after logon
+        
         String url = "/Logon.jsp";
         String msg = "";
         ArrayList<Store> stores = new ArrayList<>();
